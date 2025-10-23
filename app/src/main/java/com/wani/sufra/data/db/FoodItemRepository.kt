@@ -52,8 +52,22 @@ class FoodItemRepository(context: Context) {
 
     fun delete(id: Int) {
         val db = dbHelper.writableDatabase
-        val cursor = db.rawQuery("SELECT * FROM food_items", null)
+        Log.d("FoodItemRepository", "Deleting item with id: $id")
+
         db.delete("food_items", "id=?", arrayOf(id.toString()))
+        val cursor = db.rawQuery("SELECT * FROM food_items", null)
+        while (cursor.moveToNext()) {
+            val id = cursor.getInt(cursor.getColumnIndexOrThrow("id"))
+            val createdAt = cursor.getInt(cursor.getColumnIndexOrThrow("created_at"))
+            val name = cursor.getString(cursor.getColumnIndexOrThrow("name"))
+            val picture = cursor.getString(cursor.getColumnIndexOrThrow("picture"))
+            val qtyType = cursor.getString(cursor.getColumnIndexOrThrow("quantity_type"))
+            val qty = cursor.getInt(cursor.getColumnIndexOrThrow("total_quantity"))
+            val updatedOn = cursor.getInt(cursor.getColumnIndexOrThrow("updated_on"))
+            val foodItem = FoodItem(id, createdAt, name,
+                picture ?: "picture", qtyType, qty, updatedOn)
+            Log.d("FoodItemRepository", "Item: $foodItem")
+        }
         cursor.close()
     }
 }
