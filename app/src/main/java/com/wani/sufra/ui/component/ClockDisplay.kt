@@ -21,10 +21,8 @@ import java.util.*
 
 @Composable
 fun ClockDisplay() {
-    // Initial timestamp (can be any Unix time in milliseconds)
-    val unixTime = remember { System.currentTimeMillis() }
 
-    // Mutable state for current time, updated every second
+    val unixTime = remember { System.currentTimeMillis() }
     var currentTime by remember { mutableStateOf(Date(unixTime)) }
 
     LaunchedEffect(Unit) {
@@ -43,26 +41,22 @@ fun ClockDisplay() {
         Row {
             Text(
                 text = hourMinuteTimeFormat.format(currentTime),
-//            fontSize = 48.sp, // big time,
                 textAlign = TextAlign.Left,
                 style = MaterialTheme.typography.bodyLarge
             )
             Text(
                 text = secondTimeFormat.format(currentTime),
-//            fontSize = 48.sp, // big time,
                 color = Red100,
                 textAlign = TextAlign.Left,
                 style = MaterialTheme.typography.bodyLarge)
             Text(
                 text = amPmFormat.format(currentTime).lowercase(),
-//            fontSize = 48.sp, // big time,
                 textAlign = TextAlign.Left,
                 style = MaterialTheme.typography.bodyLarge)
         }
 
         Text(
             text = dateFormat.format(currentTime),
-//            fontSize = 20.sp, // smaller date
             textAlign = TextAlign.Left,
             style = MaterialTheme.typography.bodyMedium
         )

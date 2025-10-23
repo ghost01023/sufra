@@ -52,8 +52,6 @@ class FoodItemRepository(context: Context) {
 
     fun delete(id: Int) {
         val db = dbHelper.writableDatabase
-        val cursor = db.rawQuery("SELECT * FROM food_items", null)
         db.delete("food_items", "id=?", arrayOf(id.toString()))
-        cursor.close()
     }
 }
